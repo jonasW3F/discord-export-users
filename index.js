@@ -14,7 +14,7 @@ client.on("message", async (msg) => {
 	// Only allow this command from admins
 	if (msg.member && msg.member.hasPermission(["ADMINISTRATOR"])) {
 		// Listen for message that says "/members" (not case sensitive)
-		if (msg.content.toLowerCase() === "$members") {
+		if (msg.content.toLowerCase() === "/members") {
 			generateCsvOfMembers(msg)
 		}
 	}
@@ -38,9 +38,6 @@ async function generateCsvOfMembers(msg) {
 
 	const csv = new ObjectsToCsv(members)
 	await csv.toDisk("./members.csv")
-		.then(() => {
-			msg.channel.send(`Here's a list of all ${guild.memberCount} server members!`, { files: ["./members.csv"] })
-		})
 		.catch((err) => {
 			console.log("Error getting a list of Discord guild members.", err)
 			msg.channel.send("Error getting the members of this server.")
